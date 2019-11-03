@@ -136,6 +136,7 @@ class Keyboard {
     this.partString = '';
     this.caps = false;
     this.buffer = [];
+    this.indexCursor = 0;
   }
 
   addhtml() {
@@ -148,8 +149,8 @@ class Keyboard {
     let textareaEl = document.createElement('textarea');
     textareaEl.className = 'textareaEl';
     textareaEl.setAttribute('rows', '10');    
-    textareaEl.setAttribute('cols', '117');
-    textareaEl.setAttribute('disabled', 'disabled');    
+    textareaEl.setAttribute('cols', '83');
+    // textareaEl.setAttribute('disabled', 'disabled');    
     document.querySelector('.mainWrapper').append(textareaEl);
     return true;
   }  
@@ -229,7 +230,7 @@ class Keyboard {
       }
       else if (event.target.classList.contains("main") || event.target.classList.contains("edition")) {
         this.keysFilter(event.target.parentElement,false);
-      }
+      }      
     });
     //mouseup
     document.querySelector('.keysContainer').addEventListener("mouseup",(event) => {      
@@ -239,30 +240,42 @@ class Keyboard {
       else if (event.target.classList.contains("main") || event.target.classList.contains("edition")) {
         this.keysFilter(event.target.parentElement,true);
       }
+      document.querySelector('.textareaEl').focus()
     });
     //keydown
     document.addEventListener("keydown",(event) => {
-      document.querySelector(`.buttonClass[data-key=${event.code}]`).classList.add('act');
-      this.keysFilter(document.querySelector(`.buttonClass[data-key=${event.code}]`),false);      
+      event.preventDefault();
+      if (this.layout[this.lang].map(item=>{
+        return item[0];
+      }).indexOf(event.code) != -1) {
+        document.querySelector(`.buttonClass[data-key=${event.code}]`).classList.add('act');
+        this.keysFilter(document.querySelector(`.buttonClass[data-key=${event.code}]`),false);      
+      }
+      document.querySelector('.textareaEl').focus();
     });
     //keyup
     document.addEventListener("keyup",(event) => {
-      document.querySelector(`.buttonClass[data-key=${event.code}]`).classList.remove('act');
-      this.keysFilter(document.querySelector(`.buttonClass[data-key=${event.code}]`),true);
+      event.preventDefault();
+      if (this.layout[this.lang].map(item=>{
+        return item[0];
+      }).indexOf(event.code) != -1) {
+        document.querySelector(`.buttonClass[data-key=${event.code}]`).classList.remove('act');
+        this.keysFilter(document.querySelector(`.buttonClass[data-key=${event.code}]`),true);
+      }
     });
   }
 
   keysFilter(value,up) {    
-    let pattern = ['Backspace','Delete','Tab','CapsLock','Enter','ShiftLeft','ShiftRight','ControlLeft','AltLeft','ControlRight','AltRight'];    
-    if (pattern.indexOf(value.getAttribute('data-key')) == -1 && !up) {
-      this.capsHandling(value,true)
-    }
-    else if(up) {      
-      this.keysUpHandling(value);
-    }
-    else {      
-      this.capsHandling(value,false);
-    }    
+    let pattern = ['Backspace','ArrowLeft','ArrowRight','ArrowDown','ArrowUp','Delete','Tab','CapsLock','Enter','ShiftLeft','ShiftRight','ControlLeft','AltLeft','ControlRight','AltRight'];    
+    if (pattern.indexOf(value.getAttribute('data-key')) == -1 && !up) {        
+        this.capsHandling(value,true);             
+      }
+      else if(up) {      
+        this.keysUpHandling(value);
+      }
+      else {      
+        this.capsHandling(value,false);
+      }           
   }
 
   capsHandling(value,print) {    
@@ -287,9 +300,14 @@ class Keyboard {
       this.buffer.push(value.querySelector('.main').innerHTML);
     }
     switch(value.querySelector('.main').innerHTML) {
-      case 'Backspace':        
-        this.partString = this.partString.substr(0,this.partString.length-1);
-        document.querySelector('.textareaEl').innerHTML = this.partString;
+      case 'Backspace':
+        this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+        if (this.indexCursor > 0) {          
+          let tempStr = document.querySelector('.textareaEl').innerHTML;    
+          this.partString = tempStr.slice(0,this.indexCursor-1)+tempStr.slice(this.indexCursor);
+          document.querySelector('.textareaEl').innerHTML = this.partString;
+          document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = this.indexCursor-1;
+        }
         break;
       case 'CapsLock':
         this.updateCaps();
@@ -305,6 +323,60 @@ class Keyboard {
           this.updatelayout();
         }        
         break;
+      case 'Del':        
+        this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+        if (this.indexCursor < document.querySelector('.textareaEl').innerHTML.length) {          
+          let tempStr = document.querySelector('.textareaEl').innerHTML;    
+          this.partString = tempStr.slice(0,this.indexCursor)+tempStr.slice(this.indexCursor+1);
+          document.querySelector('.textareaEl').innerHTML = this.partString;
+          document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = this.indexCursor;
+        }
+        break;
+      case 'ENTER':        
+        this.printValue('\n');        
+        break;
+      case 'Tab':
+        (()=>{          
+          this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+          let tempStr = document.querySelector('.textareaEl').innerHTML;    
+          this.partString = tempStr.slice(0,this.indexCursor)+'  '+tempStr.slice(this.indexCursor);
+          document.querySelector('.textareaEl').innerHTML = this.partString;
+          document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = this.indexCursor+2;
+        })()
+        break;
+      case '\u25C4':
+        this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+        if (this.indexCursor > 0) {
+          document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = this.indexCursor-1;
+        }
+        break;
+      case '\u25BA':        
+        this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+        if (this.indexCursor < document.querySelector('.textareaEl').innerHTML.length) {
+          document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = this.indexCursor+1;
+        }
+        break;
+      case '\u25BC':
+        (()=>{
+          this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+          let result = document.querySelector('.textareaEl').innerHTML.indexOf('\n',this.indexCursor+1);                    
+          if (result != -1) {
+            document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = result;
+          }
+          else {
+            document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = document.querySelector('.textareaEl').innerHTML.length;
+          }
+        })()
+        break;
+      case '\u25B2':
+        (()=>{
+          this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+          let result = document.querySelector('.textareaEl').innerHTML.lastIndexOf('\n',this.indexCursor-1);                    
+          if (result != -1) {
+            document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = result;
+          }
+        })()
+        break; 
     }    
   }    
   
@@ -321,12 +393,12 @@ class Keyboard {
 
   setLayoutStorage(value) {
     if (value) {
-      localStorage.removeItem('lang')
+      localStorage.removeItem('lang');
       localStorage.setItem('lang', `${value}`); 
     }
     else {
       if (!localStorage.getItem('lang')) {        
-        localStorage.removeItem('lang')
+        localStorage.removeItem('lang');
         localStorage.setItem('lang', `${this.lang}`);      
       }
       else {      
@@ -337,8 +409,11 @@ class Keyboard {
   }
 
   printValue(value) {
-    this.partString = this.partString + value;
-    document.querySelector('.textareaEl').innerHTML = this.partString;    
+    this.indexCursor = document.querySelector('.textareaEl').selectionStart;
+    let tempStr = document.querySelector('.textareaEl').innerHTML;    
+    this.partString = tempStr.slice(0,this.indexCursor)+value+tempStr.slice(this.indexCursor);
+    document.querySelector('.textareaEl').innerHTML = this.partString;
+    document.querySelector('.textareaEl').selectionStart = document.querySelector('.textareaEl').selectionEnd = this.indexCursor+1;
   }
 }
 
