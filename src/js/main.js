@@ -185,7 +185,141 @@ class Keyboard {
       }      
     });
     return true;    
-  }  
+  }
+  //language toggle
+  updateCaps() {
+    this.layout.forEach((item)=>{
+      let regexp = /^[a-zа-я]$/i;
+      if (regexp.test(item[1])) {        
+        document.querySelector(`.buttonClass[data-key=${item[0]}]`).classList.toggle('caps');
+      }
+    });
+    this.caps = !this.caps;
+  }
+  //language toggle
+  updatelayout() {
+    this.layout = this.layout == this.arrKeysRus ? this.arrKeysEng : this.arrKeysRus;
+    this.layout.forEach((item) => {
+      let elem = document.querySelector(`.buttonClass[data-key=${item[0]}]`);      
+      elem.querySelector('.main').innerHTML = item[1];      
+      if (item[2]) {
+        if(elem.querySelector('.edition') == null) {
+          let spanEd = document.createElement('span');          
+          spanEd.classList.add('edition');
+          elem.append(spanEd);
+        } 
+        elem.querySelector('.edition').innerHTML = item[2];       
+      }
+      else {
+        if(elem.querySelector('.edition') != null) {
+          elem.querySelector('.edition').remove()
+        }
+      }
+    })
+  }
+
+  addEvents() {
+    //mousedown
+    document.querySelector('.keysContainer').addEventListener("mousedown",(event) => {      
+      if (event.target.classList.contains("buttonClass")) {
+        this.keysFilter(event.target,false) ;
+      }
+      else if (event.target.classList.contains("main") || event.target.classList.contains("edition")) {
+        this.keysFilter(event.target.parentElement,false);
+      }
+    });
+    //mouseup
+    document.querySelector('.keysContainer').addEventListener("mouseup",(event) => {      
+      if (event.target.classList.contains("buttonClass")) {
+        this.keysFilter(event.target,true);
+      }
+      else if (event.target.classList.contains("main") || event.target.classList.contains("edition")) {
+        this.keysFilter(event.target.parentElement,true);
+      }
+    });
+    //keydown
+    document.addEventListener("keydown",(event) => {
+      document.querySelector(`.buttonClass[data-key=${event.code}]`).classList.add('act');
+      this.keysFilter(document.querySelector(`.buttonClass[data-key=${event.code}]`),false);      
+    });
+    //keyup
+    document.addEventListener("keyup",(event) => {
+      document.querySelector(`.buttonClass[data-key=${event.code}]`).classList.remove('act');
+      this.keysFilter(document.querySelector(`.buttonClass[data-key=${event.code}]`),true);
+    });
+  }
+
+  keysFilter(value,up) {    
+    let pattern = ['Backspace','Delete','Tab','CapsLock','Enter','ShiftLeft','ShiftRight','ControlLeft','AltLeft','ControlRight','AltRight'];    
+    if (pattern.indexOf(value.getAttribute('data-key')) == -1 && !up) {
+      this.capsHandling(value,true)
+    }
+    else if(up) {      
+      this.keysUpHandling(value);
+    }
+    else {      
+      this.capsHandling(value,false);
+    }    
+  }
+
+  capsHandling(value,print) {    
+    if (!this.caps && print) {
+      this.printValue(value.querySelector('.main').innerHTML);
+    }
+    else if (this.caps && print) {
+      if (value.querySelector('.edition')) {
+        this.printValue(value.querySelector('.edition').innerHTML);
+      }
+      else {
+        this.printValue(value.querySelector('.main').innerHTML.toUpperCase());
+      }
+    }
+    else {      
+      this.keysHandling(value)
+    }
+  }
+
+  keysHandling(value) {    
+    if (this.buffer.indexOf(value.querySelector('.main').innerHTML) == -1) {      
+      this.buffer.push(value.querySelector('.main').innerHTML);
+    }
+    switch(value.querySelector('.main').innerHTML) {
+      case 'Backspace':        
+        this.partString = this.partString.substr(0,this.partString.length-1);
+        document.querySelector('.textareaEl').innerHTML = this.partString;
+        break;
+      case 'CapsLock':
+        this.updateCaps();
+        break;
+      case 'Shift':
+        if (this.buffer.indexOf('Alt') != -1) {
+          this.updatelayout();
+        }
+        this.updateCaps();
+        break;
+      case 'Alt':
+        if (this.buffer.indexOf('Shift') != -1) {
+          this.updatelayout();
+        }        
+        break;
+    }    
+  }    
+  
+  keysUpHandling(value) {
+    switch(value.querySelector('.main').innerHTML) {
+      case 'Shift':        
+        this.updateCaps();
+        break;      
+    }
+    if(this.buffer.indexOf(value.querySelector('.main').innerHTML) != -1) {
+      this.buffer.splice(this.buffer.indexOf(value.querySelector('.main').innerHTML),1);
+    }    
+  }
+
+  printValue(value) {
+    this.partString = this.partString + value;
+    document.querySelector('.textareaEl').innerHTML = this.partString;
+  }
 }
 
 const keyboard = new Keyboard();
@@ -194,4 +328,5 @@ let promise = new Promise((resolve,reject) => {
   return keyboard.addhtml() ? resolve() : reject()  
 });
 promise.then(() => { keyboard.addKeyBoard() })
+.then(() => { keyboard.addEvents() })
 .catch(() => { throw new Error('ошибка создания Html') })
