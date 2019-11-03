@@ -1,0 +1,78 @@
+
+
+.mainWrapper {
+  width: 1024px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.keysContainer {
+  width: 860px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.textareaEl {
+  background: #ffffff;
+  color: #000000;
+}
+
+.buttonClass {
+  position: relative;
+  width: 50px;
+  height: 42px;
+  background-color: #171830;
+  font-family: "Segoe UI",Helvetica,Arial,sans-serif; 
+  color: #ffffff;
+  font-size: 22px;
+  margin: 3px;
+  border-radius: 5px;
+  padding-top: 8px;
+  user-select: none;
+  cursor: default;
+  outline: none;
+  &:hover {
+    background: #171830e8;
+  }
+  &:active {
+    background: #1e23bb;    
+  }
+}
+
+.act {
+  background: #1e23bb;
+}
+
+.caps {
+  text-transform: uppercase;
+}
+
+.edition {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  font-size: 16px;
+  color: #aaaaaa
+}
+
+.key-13,.key-29 {
+  width: 120px;
+}
+.key-42 {
+  width: 176px;
+}
+
+.key-14 {
+  width: 64px;
+}
+.key-41 {
+  width: 106px;
+}
+.key-57 {
+  width: 344px;
+}
+.key-55,.key-59 {
+  width: 106px;
+}
