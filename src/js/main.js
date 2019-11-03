@@ -1,136 +1,138 @@
 class Keyboard {
   constructor() {
-    this.arrKeysRus = [
-      ['Backquote','ё'],
-      ['Digit1','1','!'],
-      ['Digit2','2','\u0022'],
-      ['Digit3','3','№'],
-      ['Digit4','4',';'],
-      ['Digit5','5','%'],
-      ['Digit6','6','^'],
-      ['Digit7','7','&'],
-      ['Digit8','8','*'],
-      ['Digit9','9','('],
-      ['Digit0','0',')'],
-      ['Minus','-','_'],
-      ['Equal','=','+'],
-      ['Backspace','Backspace'],
-      ['Tab','Tab'],
-      ['KeyQ','й'],
-      ['KeyW','ц'],
-      ['KeyE','у'],
-      ['KeyR','к'],
-      ['KeyT','е'],
-      ['KeyY','н'],
-      ['KeyU','г'],
-      ['KeyI','ш'],
-      ['KeyO','щ'],
-      ['KeyP','з'],
-      ['BracketLeft','х'],
-      ['BracketRight','ъ'],
-      ['Backslash','\\','/'],
-      ['Delete','Del'],
-      ['CapsLock','CapsLock'],
-      ['KeyA','ф'],
-      ['KeyS','ы'],
-      ['KeyD','в'],
-      ['KeyF','а'],
-      ['KeyG','п'],
-      ['KeyH','р'],
-      ['KeyJ','о'],
-      ['KeyK','л'],
-      ['KeyL','д'],
-      ['Semicolon','ж'],
-      ['Quote','э'],
-      ['Enter','ENTER'],
-      ['ShiftLeft','Shift'],
-      ['KeyZ','я'],
-      ['KeyX','ч'],
-      ['KeyC','с'],
-      ['KeyV','м'],
-      ['KeyB','и'],
-      ['KeyN','т'],
-      ['KeyM','ь'],
-      ['Comma','б'],
-      ['Period','ю'],
-      ['Slash','/'],
-      ['ArrowUp','\u25B2'],
-      ['ShiftRight','Shift'],
-      ['ControlLeft','Ctrl'],
-      ['AltLeft','Alt'],
-      ['Space',' '],
-      ['AltRight','Alt'],
-      ['ControlRight','Ctrl'],
-      ['ArrowLeft','\u25C4'],
-      ['ArrowDown','\u25BC'],
-      ['ArrowRight','\u25BA']
-    ];
-    this.arrKeysEng = [
-      ['Backquote','\u0060','\u007E'],
-      ['Digit1','1','!'],
-      ['Digit2','2','@'],
-      ['Digit3','3','#'],
-      ['Digit4','4','$'],
-      ['Digit5','5','%'],
-      ['Digit6','6',':'],
-      ['Digit7','7','?'],
-      ['Digit8','8','*'],
-      ['Digit9','9','('],
-      ['Digit0','0',')'],
-      ['Minus','-','_'],
-      ['Equal','=','+'],
-      ['Backspace','Backspace'],
-      ['Tab','Tab'],
-      ['KeyQ','q'],
-      ['KeyW','w'],
-      ['KeyE','e'],
-      ['KeyR','r'],
-      ['KeyT','t'],
-      ['KeyY','y'],
-      ['KeyU','u'],
-      ['KeyI','i'],
-      ['KeyO','o'],
-      ['KeyP','p'],
-      ['BracketLeft','['],
-      ['BracketRight',']'],
-      ['Backslash','\\','/'],
-      ['Delete','Del'],
-      ['CapsLock','CapsLock'],
-      ['KeyA','a'],
-      ['KeyS','s'],
-      ['KeyD','d'],
-      ['KeyF','f'],
-      ['KeyG','g'],
-      ['KeyH','h'],
-      ['KeyJ','j'],
-      ['KeyK','k'],
-      ['KeyL','l'],
-      ['Semicolon',';'],
-      ['Quote','\u0027'],
-      ['Enter','ENTER'],
-      ['ShiftLeft','Shift'],
-      ['KeyZ','z'],
-      ['KeyX','x'],
-      ['KeyC','c'],
-      ['KeyV','v'],
-      ['KeyB','b'],
-      ['KeyN','n'],
-      ['KeyM','m'],
-      ['Comma',','],
-      ['Period','.'],
-      ['Slash','/'],
-      ['ArrowUp','\u25B2'],
-      ['ShiftRight','Shift'],
-      ['ControlLeft','Ctrl'],
-      ['AltLeft','Alt'],
-      ['Space',' '],
-      ['AltRight','Alt'],
-      ['ControlRight','Ctrl'],
-      ['ArrowLeft','\u25C4'],
-      ['ArrowDown','\u25BC'],
-      ['ArrowRight','\u25BA']
-    ];    
-    this.layout = this.arrKeysRus;
+    this.layout = {
+      'rus': [
+        ['Backquote','ё'],
+        ['Digit1','1','!'],
+        ['Digit2','2','\u0022'],
+        ['Digit3','3','№'],
+        ['Digit4','4',';'],
+        ['Digit5','5','%'],
+        ['Digit6','6','^'],
+        ['Digit7','7','&'],
+        ['Digit8','8','*'],
+        ['Digit9','9','('],
+        ['Digit0','0',')'],
+        ['Minus','-','_'],
+        ['Equal','=','+'],
+        ['Backspace','Backspace'],
+        ['Tab','Tab'],
+        ['KeyQ','й'],
+        ['KeyW','ц'],
+        ['KeyE','у'],
+        ['KeyR','к'],
+        ['KeyT','е'],
+        ['KeyY','н'],
+        ['KeyU','г'],
+        ['KeyI','ш'],
+        ['KeyO','щ'],
+        ['KeyP','з'],
+        ['BracketLeft','х'],
+        ['BracketRight','ъ'],
+        ['Backslash','\\','/'],
+        ['Delete','Del'],
+        ['CapsLock','CapsLock'],
+        ['KeyA','ф'],
+        ['KeyS','ы'],
+        ['KeyD','в'],
+        ['KeyF','а'],
+        ['KeyG','п'],
+        ['KeyH','р'],
+        ['KeyJ','о'],
+        ['KeyK','л'],
+        ['KeyL','д'],
+        ['Semicolon','ж'],
+        ['Quote','э'],
+        ['Enter','ENTER'],
+        ['ShiftLeft','Shift'],
+        ['KeyZ','я'],
+        ['KeyX','ч'],
+        ['KeyC','с'],
+        ['KeyV','м'],
+        ['KeyB','и'],
+        ['KeyN','т'],
+        ['KeyM','ь'],
+        ['Comma','б'],
+        ['Period','ю'],
+        ['Slash','/'],
+        ['ArrowUp','\u25B2'],
+        ['ShiftRight','Shift'],
+        ['ControlLeft','Ctrl'],
+        ['AltLeft','Alt'],
+        ['Space',' '],
+        ['AltRight','Alt'],
+        ['ControlRight','Ctrl'],
+        ['ArrowLeft','\u25C4'],
+        ['ArrowDown','\u25BC'],
+        ['ArrowRight','\u25BA']
+      ],
+      'eng': [
+        ['Backquote','\u0060','\u007E'],
+        ['Digit1','1','!'],
+        ['Digit2','2','@'],
+        ['Digit3','3','#'],
+        ['Digit4','4','$'],
+        ['Digit5','5','%'],
+        ['Digit6','6',':'],
+        ['Digit7','7','?'],
+        ['Digit8','8','*'],
+        ['Digit9','9','('],
+        ['Digit0','0',')'],
+        ['Minus','-','_'],
+        ['Equal','=','+'],
+        ['Backspace','Backspace'],
+        ['Tab','Tab'],
+        ['KeyQ','q'],
+        ['KeyW','w'],
+        ['KeyE','e'],
+        ['KeyR','r'],
+        ['KeyT','t'],
+        ['KeyY','y'],
+        ['KeyU','u'],
+        ['KeyI','i'],
+        ['KeyO','o'],
+        ['KeyP','p'],
+        ['BracketLeft','['],
+        ['BracketRight',']'],
+        ['Backslash','\\','/'],
+        ['Delete','Del'],
+        ['CapsLock','CapsLock'],
+        ['KeyA','a'],
+        ['KeyS','s'],
+        ['KeyD','d'],
+        ['KeyF','f'],
+        ['KeyG','g'],
+        ['KeyH','h'],
+        ['KeyJ','j'],
+        ['KeyK','k'],
+        ['KeyL','l'],
+        ['Semicolon',';'],
+        ['Quote','\u0027'],
+        ['Enter','ENTER'],
+        ['ShiftLeft','Shift'],
+        ['KeyZ','z'],
+        ['KeyX','x'],
+        ['KeyC','c'],
+        ['KeyV','v'],
+        ['KeyB','b'],
+        ['KeyN','n'],
+        ['KeyM','m'],
+        ['Comma',','],
+        ['Period','.'],
+        ['Slash','/'],
+        ['ArrowUp','\u25B2'],
+        ['ShiftRight','Shift'],
+        ['ControlLeft','Ctrl'],
+        ['AltLeft','Alt'],
+        ['Space',' '],
+        ['AltRight','Alt'],
+        ['ControlRight','Ctrl'],
+        ['ArrowLeft','\u25C4'],
+        ['ArrowDown','\u25BC'],
+        ['ArrowRight','\u25BA']
+      ]
+    }
+    this.lang = 'eng';    
     this.partString = '';
     this.caps = false;
     this.buffer = [];
@@ -159,7 +161,7 @@ class Keyboard {
     document.querySelector('.mainWrapper').append(keysContainer);
     
     //add keys
-    this.layout.forEach((item,ind)=>{
+    this.layout[this.lang].forEach((item,ind)=>{
       let divKey = document.createElement('div');
       divKey.setAttribute('data-key',item[0]);      
       divKey.classList.add('buttonClass');
@@ -186,9 +188,9 @@ class Keyboard {
     });
     return true;    
   }
-  //language toggle
+  //caps toggle
   updateCaps() {
-    this.layout.forEach((item)=>{
+    this.layout[this.lang].forEach((item)=>{
       let regexp = /^[a-zа-я]$/i;
       if (regexp.test(item[1])) {        
         document.querySelector(`.buttonClass[data-key=${item[0]}]`).classList.toggle('caps');
@@ -198,8 +200,9 @@ class Keyboard {
   }
   //language toggle
   updatelayout() {
-    this.layout = this.layout == this.arrKeysRus ? this.arrKeysEng : this.arrKeysRus;
-    this.layout.forEach((item) => {
+    this.lang = this.lang == 'rus' ? 'eng' : 'rus';
+    this.setLayoutStorage(this.lang)
+    this.layout[this.lang].forEach((item) => {
       let elem = document.querySelector(`.buttonClass[data-key=${item[0]}]`);      
       elem.querySelector('.main').innerHTML = item[1];      
       if (item[2]) {
@@ -316,9 +319,26 @@ class Keyboard {
     }    
   }
 
+  setLayoutStorage(value) {
+    if (value) {
+      localStorage.removeItem('lang')
+      localStorage.setItem('lang', `${value}`); 
+    }
+    else {
+      if (!localStorage.getItem('lang')) {        
+        localStorage.removeItem('lang')
+        localStorage.setItem('lang', `${this.lang}`);      
+      }
+      else {      
+        this.lang = localStorage.getItem('lang');
+      }
+    }    
+    return true;
+  }
+
   printValue(value) {
     this.partString = this.partString + value;
-    document.querySelector('.textareaEl').innerHTML = this.partString;
+    document.querySelector('.textareaEl').innerHTML = this.partString;    
   }
 }
 
@@ -327,6 +347,7 @@ const keyboard = new Keyboard();
 let promise = new Promise((resolve,reject) => {
   return keyboard.addhtml() ? resolve() : reject()  
 });
-promise.then(() => { keyboard.addKeyBoard() })
+promise.then(() => { keyboard.setLayoutStorage() })
+.then(() => { keyboard.addKeyBoard() })
 .then(() => { keyboard.addEvents() })
 .catch(() => { throw new Error('ошибка создания Html') })
