@@ -317,12 +317,7 @@ class Keyboard {
           this.updatelayout();
         }
         this.updateCaps();
-        break;
-      case 'Alt':
-        if (this.buffer.indexOf('Shift') != -1) {
-          this.updatelayout();
-        }        
-        break;
+        break;      
       case 'Del':        
         this.indexCursor = document.querySelector('.textareaEl').selectionStart;
         if (this.indexCursor < document.querySelector('.textareaEl').innerHTML.length) {          
