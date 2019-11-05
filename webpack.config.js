@@ -1,12 +1,12 @@
-// Webpack v4
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
-module.exports = {  
+
+module.exports = {
   entry: { main: './src/app.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: './js/bundle.js'
+    filename: './js/bundle.js',
   },
   module: {
     rules: [
@@ -16,26 +16,26 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+            presets: ['@babel/preset-env'],
+          },
+        },
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [                   
+        use: [
           'style-loader',
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../'
-            }
-          },          
-          'css-loader',          
-          'sass-loader'
+              publicPath: '../',
+            },
+          },
+          'css-loader',
+          'sass-loader',
         ],
-      }      
-    ]
-  },  
+      },
+    ],
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
@@ -54,4 +54,4 @@ module.exports = {
       },
     },
   },
-}
+};
